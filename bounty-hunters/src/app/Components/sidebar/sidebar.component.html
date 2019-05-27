@@ -1,0 +1,29 @@
+<nav>
+    <ul>
+        <li *ngIf="!loggedIn()">
+            <a routerLink="login" data-toggle="tooltip" data-placement="left" title="log in">
+                <i class="material-icons">supervisor_account</i>
+            </a>
+        </li>
+
+        <li *ngIf="loggedIn()">
+            <a data-toggle="tooltip" data-placement="left" title="log out">
+                <i (click)="logout()"  class="material-icons">highlight_off</i>
+            </a>
+        </li>
+
+        <li>
+            <a routerLink="" data-toggle="tooltip" data-placement="left" title="home">
+                <i class="material-icons">home</i>
+            </a>
+        </li>
+
+        <li  *ngIf="isShown() == true">
+            <a  [routerLink]="route" data-toggle="tooltip" data-placement="left" title="brackets">
+                <i class="material-icons">call_split</i>
+            </a>
+            </li>
+
+
+    </ul>
+</nav>

@@ -1,0 +1,225 @@
+<!-- display fireworks if tournament is completed -->
+<ng-container *ngFor="let match of tournament?.matches">
+  <ng-container *ngIf="tournament?.currentMatch != 0 && match?.whichMatch == tournament?.matchesCount && match?.winner">
+    <div class="pyro">
+      <div class="before"></div>
+      <div class="after"></div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<div class="head">
+  <h2>{{tournament?.name}}</h2>
+  <button class="button-back" mat-flat-button color="#642121" routerLink="/overview/{{tournament?.tournamentId}}">Back</button>
+</div>
+
+<br>
+
+<div>
+  <mat-card>
+    <h3>Brackets</h3>
+    <ng-container *ngIf="tournament?.currentMatch == 0">
+      <button *ngIf="loggedIn()" mat-flat-button color="#642121" (click)="onCreateBracketClick()">Create Brackets</button>
+    </ng-container>
+    <table *ngIf="tournament?.matches?.length > 0" class="table table-sm">
+      <tr align="center">
+        <!-- <th>Round</th> -->
+        <th>Contestant</th>
+        <th style="text-align:right;">Match</th>
+        <th style="text-align:left;">score</th>
+        <th>Contestant</th>
+      </tr>
+      <ng-container *ngFor="let match of tournament?.matches; let i = index">
+        <tr align="center" class="otherColor" *ngIf="match?.whichMatch != tournament?.matches[i - 1]?.whichMatch && match.whichMatch > 0 ">
+          <td colspan="4">
+            <ng-container *ngIf="match.whichMatch == tournament?.matchesCount">
+              <h4 style="color:white;">ROUND for the 1st place</h4>
+            </ng-container>
+            <ng-container *ngIf="match.whichMatch == tournament?.matchesCount + 1">
+              <h4 style="color:white;">ROUND for the 3rd place</h4>
+            </ng-container>
+            <ng-container *ngIf="match.whichMatch != tournament?.matchesCount && match.whichMatch != tournament?.matchesCount + 1">
+              <h4 style="color:white;">{{match[i-1]?.whichMatch}} ROUND {{match?.whichMatch}}</h4>
+            </ng-container>
+          </td>
+        </tr>
+
+        <tr align="center" *ngIf=" match.whichMatch > 0 ">
+          <ng-container *ngFor="let player of match?.entries; let i = index">
+            <th *ngIf="i==0">
+              <span *ngIf="match.winner?.username == player.matchPlayer?.username" style="color: green;">
+                {{ player.matchPlayer?.username }}
+              </span>
+              <span *ngIf="match.winner?.username != player.matchPlayer?.username" style="color: black;">
+                {{ player.matchPlayer?.username }}
+              </span>
+            </th>
+            <th *ngIf="match.winner">
+              {{ player.score }}
+            </th>
+            <th *ngIf="!match.winner">
+              <button *ngIf="loggedIn()" mat-mini-fab (click)="onIncreaseScoreClick(match.id, player.id, false)">-</button>
+              {{ player.score }}
+              <button *ngIf="loggedIn()" mat-mini-fab (click)="onIncreaseScoreClick(match.id, player.id, true)">+</button>
+            </th>
+            <th *ngIf="i==1">
+              <span *ngIf="match.winner?.username == player.matchPlayer?.username" style="color: green;">
+                {{ player.matchPlayer?.username }}
+              </span>
+              <span *ngIf="match.winner?.username != player.matchPlayer?.username" style="color: black;">
+                {{ player.matchPlayer?.username }}
+              </span>
+            </th>
+          </ng-container>
+        </tr>
+      </ng-container>
+    </table>
+
+    <ng-container *ngIf="tournament?.currentMatch > 0 && tournament?.currentMatch < tournament?.matchesCount">
+      <button mat-flat-button (click)="onUpdateBracketClick()">New round</button>
+    </ng-container>
+  </mat-card>
+</div>
+
+<br>
+
+
+<!-- tournament leadeerboard -->
+<ng-container *ngIf="tournament?.currentMatch > 0 && tournament?.currentMatch == tournament?.matchesCount">
+  <mat-card>
+    <mat-card-title>
+      <h3>Tournament Leaderboard</h3>
+    </mat-card-title>
+
+    <!-- this is stupid, but no time so that should do -->
+    <table id="size" *ngIf="tournament?.players?.length > 0" class="table table-sm table-hover">
+      <th>Place</th>
+      <th>Contestant</th>
+      <th></th>
+      <ng-container *ngFor="let match of tournament?.matches">
+        <ng-container *ngIf="match.whichMatch == tournament?.matchesCount">
+          <ng-container *ngFor="let entry of match?.entries">
+            <tr *ngIf="entry?.matchPlayer?.username == match?.winner?.username">
+              <td>1st
+                <span class="circle-gold"></span>
+              </td>
+              <td>{{ entry?.matchPlayer.username }}</td>
+            </tr>
+            <tr *ngIf="entry?.matchPlayer?.username != match?.winner?.username">
+              <td>2nd
+                <span class="circle-silver"></span>
+              </td>
+              <td>{{ entry?.matchPlayer.username }}</td>
+            </tr>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="match.whichMatch == tournament?.matchesCount + 1">
+          <ng-container *ngFor="let entry of match?.entries">
+            <tr *ngIf="entry?.matchPlayer?.username == match?.winner?.username">
+              <td>3rd
+                <span class="circle-bronze"></span>
+              </td>
+              <td>{{ entry?.matchPlayer.username }}</td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </table>
+  </mat-card>
+</ng-container>
+
+<ng-container *ngIf="tournament?.playersInKnockout == 4">
+  <mat-card>
+    <main id="tournament">
+      <ul class="round round-1">
+        <ng-container *ngFor="let match of tournament?.matches; let j = index">
+          <ng-container *ngIf="match.whichMatch == 1">
+            <!-- <li class="spacer">&nbsp;</li> -->
+            <ng-container *ngFor="let entry of match?.entries;let i = index">
+              <ng-container *ngIf="i==0">
+
+                <ng-container *ngIf="entry?.matchPlayer?.username == match?.winner?.username">
+                  <li class="game game-top winner">
+                    {{entry.matchPlayer?.username}} ({{ entry.score }})
+                  </li>
+                </ng-container>
+                <ng-container *ngIf="entry?.matchPlayer?.username != match?.winner?.username">
+                  <li class="game game-bottom">
+                    {{entry.matchPlayer?.username}} ({{ entry?.score }})
+                  </li>
+                </ng-container>
+
+                <li class="game game-spacer">&nbsp;</li>
+              </ng-container>
+              <ng-container *ngIf="i==1">
+                <ng-container *ngIf="entry?.matchPlayer?.username == match?.winner?.username">
+                  <li class="game game-top winner">
+                    {{entry.matchPlayer?.username}} ({{ entry?.score }})
+                  </li>
+                </ng-container>
+                <ng-container *ngIf="entry?.matchPlayer?.username != match?.winner?.username">
+                  <li class="game game-bottom">
+                    {{entry?.matchPlayer?.username}} ({{ entry?.score }})
+                  </li>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+            <!-- <li class="spacer">&nbsp;</li> -->
+          </ng-container>
+        </ng-container>
+      </ul>
+
+      <ul class="round round-2">
+        <ng-container *ngFor="let match of tournament?.matches; let j = index">
+          <ng-container *ngIf="match.whichMatch == 2">
+            <li class="spacer">&nbsp;</li>
+            <ng-container *ngFor="let entry of match?.entries;let i = index">
+              <ng-container *ngIf="i==0">
+                <ng-container *ngIf="entry?.matchPlayer?.username == match?.winner?.username">
+                  <li class="game game-top winner">
+                    {{entry?.matchPlayer?.username}} ({{ entry?.score }})
+                  </li>
+                </ng-container>
+                <ng-container *ngIf="entry?.matchPlayer?.username != match?.winner?.username">
+                  <li class="game game-bottom">
+                    {{entry?.matchPlayer?.username}} ({{ entry?.score }})
+                  </li>
+                </ng-container>
+                <li class="game game-spacer">&nbsp;</li>
+              </ng-container>
+              <ng-container *ngIf="i==1">
+                <ng-container *ngIf="entry?.matchPlayer?.username == match?.winner?.username">
+                  <li class="game game-top winner">
+                    {{entry?.matchPlayer?.username}} ({{ entry?.score }})
+                  </li>
+                </ng-container>
+                <ng-container *ngIf="entry?.matchPlayer?.username != match?.winner?.username">
+                  <li class="game game-bottom">
+                    {{entry?.matchPlayer?.username}} ({{ entry?.score }})
+                  </li>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+            <li class="spacer">&nbsp;</li>
+          </ng-container>
+        </ng-container>
+      </ul>
+      <ul class="round round-3">
+        <ng-container *ngFor="let match of tournament?.matches; let j = index">
+          <ng-container *ngIf="match.whichMatch == 2">
+            <li class="spacer">&nbsp;</li>
+            <ng-container *ngFor="let entry of match?.entries">
+              <ng-container *ngIf="entry?.matchPlayer?.username == match.winner?.username">
+                <li class="game game-top winner">
+                  {{entry?.matchPlayer?.username}} ({{ entry?.score }})
+                </li>
+              </ng-container>
+            </ng-container>
+            <li class="spacer">&nbsp;</li>
+          </ng-container>
+        </ng-container>
+      </ul>
+    </main>
+  </mat-card>
+  <br>
+</ng-container>

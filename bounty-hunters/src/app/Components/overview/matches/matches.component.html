@@ -1,0 +1,44 @@
+<div class="scrollable mat-card">
+  <h3>Matches</h3>
+  <table *ngIf="tournament?.matches?.length > 0" class="table table-sm table-hover">
+    <tr>
+      <th>Contestant</th>
+      <th style="text-align:right;">Match</th>
+      <th style="text-align:left;">score</th>
+      <th>Contestant</th>
+    </tr>
+    <tr *ngFor="let match of tournament?.matches">
+      <ng-container *ngIf="match.whichMatch == 0">
+      <ng-container *ngFor="let entry of match?.entries; let i = index">
+        <th *ngIf="i == 0"> 
+          <span *ngIf="match.winner?.username == entry.matchPlayer?.username" style="color: green;">
+             {{ entry.matchPlayer?.username }}
+          </span>
+          <span *ngIf="match.winner?.username != entry.matchPlayer?.username" style="color: black;">
+             {{ entry.matchPlayer?.username }}
+            </span>
+        </th>
+        <th *ngIf="match.winner">
+          {{ entry.score }}
+        </th>
+        <th *ngIf="!match.winner">
+          <button *ngIf="loggedIn()" mat-mini-fab (click)="onIncreaseScoreClick(match.id, entry.id, false)">-</button>
+          {{ entry.score }}
+          <button *ngIf="loggedIn()" mat-mini-fab (click)="onIncreaseScoreClick(match.id, entry.id, true)">+</button>
+        </th>
+        <th *ngIf="i == 1"> 
+            <span *ngIf="match.winner?.username == entry.matchPlayer?.username" style="color: green;">
+               {{ entry.matchPlayer?.username }}
+            </span>
+            <span *ngIf="match.winner?.username != entry.matchPlayer?.username" style="color: black;">
+               {{ entry.matchPlayer?.username }}
+              </span>
+          </th>
+      </ng-container>
+      </ng-container>
+    </tr>
+  </table>
+  <ng-container *ngIf="tournament?.currentMatch == 0">
+    <button *ngIf="loggedIn()" mat-flat-button (click)="onAddMatchClick()">new match</button>
+  </ng-container>
+</div>

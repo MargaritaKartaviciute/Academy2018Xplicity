@@ -1,0 +1,35 @@
+<div>
+  
+  <div class="center">
+  <table *ngIf="tournaments?.length > 0" class="table table-sm table-hover">
+    <th> existing tournaments</th>
+      <th></th>
+      <tr *ngFor="let tournament of tournaments">
+        <td [routerLink]="['/overview', tournament.tournamentId]"> {{ tournament.name }}
+
+          <ng-container *ngIf="tournament.currentMatch < tournament.matchesCount || tournament.currentMatch == 0">
+              <span class="circle-active"></span>
+          </ng-container>
+
+          <ng-container *ngIf="tournament.currentMatch == tournament.matchesCount && tournament.currentMatch != 0">
+              <span class="circle-completed"></span>
+          </ng-container>
+        
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+  <!--
+    <div *ngIf="tournaments?.length > 0">
+    <ul class="align-list" *ngFor="let tournament of tournaments">
+        <li [routerLink]="['/overview', tournament.tournamentId]">{{tournament.name}}</li>
+    </ul>
+  </div>
+  <p *ngIf="tournaments?.length == 0">Tournament list is empty</p>
+  -->
+  
+
+
+</div>

@@ -1,0 +1,31 @@
+
+  table {
+    width: 30%;
+    margin-top: 18px;
+    margin-left:auto; 
+    margin-right:auto;
+    padding: 5px 10px;
+    text-align: center;
+    cursor: hand;
+    cursor: pointer; 
+    color: #683131;
+    position: relative;
+    font-size: x-large;
+}
+
+
+.circle-active {
+  height: 25px;
+  width: 25px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.circle-completed {
+  height: 25px;
+  width: 25px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}

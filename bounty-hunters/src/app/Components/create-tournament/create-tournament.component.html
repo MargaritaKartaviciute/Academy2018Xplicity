@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="column" style="width: 30%"></div>
+  <div class="column" style="width: 40%">
+    <mat-card>
+      <mat-card-content>         
+          <h1> New Tournament </h1>
+          <hr>
+          <form #newTournamentForm="ngForm" (ngSubmit)="onSubmit(newTournamentForm)">
+            <div>
+                <mat-form-field appearance="standard">
+                  <mat-label> Tournament name </mat-label>
+                    <input matInput [(ngModel)]="tournament.name" type="text" name="name" placeholder="Enter tournament name" required #nameInput="ngModel" (keydown.enter)="$event.preventDefault()">
+                  </mat-form-field>
+              <p *ngIf="nameInput.invalid && (nameInput.dirty || nameInput.touched)" class="error">
+                Tournament name cannot be empty.
+              </p>
+            </div>        
+            <br>
+            <form (ngSubmit)="addContact()">
+              <div class="col-md-5" class="center">             
+                <label *ngIf="tournament?.playersInTeam === '2'" for="playerUsername">Team name:</label>               
+                <label *ngIf="tournament?.playersInTeam === '1'" for="playerUsername">Player name:</label> 
+                <input matInput class="text-field" *ngIf="tournament?.playersInTeam === '1'" [(ngModel)]="playerUsername" type="text" name="username" placeholder="Player name" required>
+                <input matInput class="text-field" *ngIf="tournament?.playersInTeam === '2'" [(ngModel)]="playerUsername" type="text" name="username" placeholder="Team name" required>
+                <input *ngIf="tournament?.playersInTeam === '1'" class="mat-flat-button" type="submit" value="Add player">
+                <input *ngIf="tournament?.playersInTeam === '2'" class="mat-flat-button" type="submit" value="Add team">
+              
+              </div>
+              <div *ngIf="tournament?.playersInTeam === '1'" id="error-label-player-add">this player name is taken</div>
+              <div *ngIf="tournament?.playersInTeam === '2'" id="error-label-player-add">this team name is taken</div>
+            </form>
+            <br>
+            <table *ngIf="tournament?.players?.length > 0" class="table table-sm table-hover">
+                <th *ngIf="tournament?.playersInTeam === '2'" >Registered teams</th>
+                <th *ngIf="tournament?.playersInTeam === '1'" >Registered players</th>
+            <th></th>
+            <tr *ngFor="let item of tournament?.players">
+              <td>{{ item?.username }}</td>
+              <button mat-icon-button color="#642121"(click)="filterPlayers(item?.username)"><mat-icon>delete</mat-icon></button>
+            </tr>
+          </table>
+          <div>
+              <button mat-flat-button color="#642121" (click)='onAddButtonClick()' [disabled]='newTournamentForm.form.invalid'>
+                  Add Tournament
+              </button>
+
+              <div *ngIf="tournament?.playersInTeam === '1'" id='error-label-add-tournament'>Too few players to play in knockouts</div>
+              <div *ngIf="tournament?.playersInTeam === '2'" id='error-label-add-tournament'>Too few teams to play in knockouts</div>
+            </div>
+          </form>
+        </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="column" style="width: 30%"></div>
+</div>
+
+
+
+      

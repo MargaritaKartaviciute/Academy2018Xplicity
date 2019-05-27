@@ -1,0 +1,56 @@
+h1 {
+    text-align: center;
+    margin-top: 1em;
+    font-weight: bold;
+}
+
+form {
+    text-align: center;
+    align-content: center;
+}
+
+.error {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: small;
+    color: red;
+
+}
+#error-label-add-tournament{
+    font-family: 'Times New Roman', Times, serif;
+    display: none;
+    color: red;
+}
+#error-label-player-add{
+    font-family: 'Times New Roman', Times, serif;
+    display: none;
+    color: red;
+}
+center {
+    text-align: center;
+}
+
+input{
+    text-align:center;
+    margin:10px;
+ }
+
+  table {
+      width: 40%;
+      margin-left:auto; 
+      margin-right:auto;
+      padding: 5px 10px;
+  }
+  label {
+    font-weight: bold;
+  }
+
+  .centerVertically{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .text-field {
+      width: 40%;
+      height: 40px;
+  }

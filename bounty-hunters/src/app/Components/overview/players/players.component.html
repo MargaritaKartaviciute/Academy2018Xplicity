@@ -1,0 +1,23 @@
+<mat-card>
+  <h3>Tournament Players</h3>
+
+  <table *ngIf="tournament?.players?.length > 0" class="table table-sm table-hover">
+    <th>Contestant</th>
+    <th>Matches</th>
+    <th>Winnings</th>
+    <th>Defeats</th>
+    <th>W/L ratio</th>
+    <th></th>
+  <tr *ngFor="let player of tournament?.players">
+      <td>{{ player?.username }}</td>
+      <td>{{ player?.matchsCount }}</td>
+      <td>{{ player?.winningsCount }}</td>
+      <td>{{ player?.defeatsCount }}</td>
+      <td>{{ WinLoseRatio(player) }}</td>
+      <td>         
+        <button *ngIf="loggedIn()" mat-flat-button (click)="openEditDialog(player)">Edit</button>
+      </td>
+    </tr>
+  </table>
+</mat-card>
+<!-- angular material table -->

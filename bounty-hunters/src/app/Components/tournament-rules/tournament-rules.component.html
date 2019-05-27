@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="column" style="width:35%">
+    </div> 
+    <div class="column" style="width: 30%">
+        <mat-card align="center">
+            <mat-card-content>
+                <h1 >Rules</h1>
+                <hr>
+                <div class="example-container" align="center">
+                    <h4 align="center">Players in knockout</h4>
+                    <mat-form-field align-objects="center">
+                      <mat-select  [(ngModel)]="tournament.playersInKnockout" name="playersInKnockout" placeholder="Players in Knockout" required>
+                        <mat-option *ngFor="let item of playersInKnockout" [value]="item.value">
+                          {{item.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <br>
+                    <h4 align="center" >Required wins</h4>
+                    <form class="example-form" align="center">
+                        <mat-form-field class="example-full-width">
+                          <input matInput [(ngModel)]="tournament.goalsToWin" name="goalsToWin" type="number" placeholder="Goals to Win" min="1" required>
+                        </mat-form-field>
+                      </form>
+                    <h4 align="center" >Game mode</h4>
+                    <mat-form-field>
+                      <mat-select  [(ngModel)]="tournament.playersInTeam" name="playersInTeam" placeholder="Game Mode" required>
+                        <mat-option *ngFor="let item of PlayersInTeam" [value]="item.value">
+                          {{item.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <br>
+                  </div> 
+            </mat-card-content>
+            <div align="center" id="error-rules-not-filled">
+              Fill out all rules!
+            </div>
+            <div align="center" id="error-rules-invalid">
+              Goals to win must be greater than zero
+            </div>
+            <mat-card-actions>
+                <button mat-flat-button color="#642121" (click)="onAddButtonClick()">Add rules</button>
+            </mat-card-actions>
+          </mat-card>
+    </div>
+    <div class="column" style="width:35%">
+      </div> 
+
+

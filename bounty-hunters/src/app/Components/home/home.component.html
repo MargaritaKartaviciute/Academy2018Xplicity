@@ -1,0 +1,11 @@
+<h1 class="logo">
+  <span class="word1">The</span>
+   <br/>
+  <span class="word2">Tournament</span>
+</h1>
+
+
+<div class="center">
+    <button *ngIf="loggedIn()" mat-flat-button routerLink="/rules">Create new</button>
+  <app-view-tournaments></app-view-tournaments>
+</div>

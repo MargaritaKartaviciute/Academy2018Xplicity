@@ -1,0 +1,20 @@
+.mat-flat-button
+{ 
+    margin: 12px auto;
+    font-family: Arial;
+    background-color:#642121;
+    color: #ffffff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.mat-flat-button:hover {
+    cursor: hand;
+    background-color: #764545f7;
+}
+
+.mat-flat-button:disabled {
+    background-color: #eee;
+      cursor: auto;
+}

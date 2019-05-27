@@ -1,0 +1,138 @@
+.mat-flat-button
+{ 
+    margin: 12px auto;
+    font-family: Arial;
+    background-color:#642121;
+    color: #ffffff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.mat-flat-button:hover {
+    cursor: hand;
+    background-color: #764545f7;
+}
+
+.mat-flat-button:disabled {
+    background-color: #eee;
+      cursor: auto;
+}
+
+div {
+    text-align: center;
+}
+
+ul {
+  list-style-type: none;
+}
+.align-list{
+    margin: 0;
+    position: relative;
+    left: 40%;
+    margin-right: -50%;
+    color: #683131;
+    font-size: 30px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.name-strip {
+    right: 15px;
+    display: inline-block;
+    background:#a30808;
+    color: #fff;
+    font-size: 30px;
+    height: 45px;
+    border-right: 1px solid lightblue;
+    border-bottom: 1px solid lightblue;
+    line-height: 45px;
+    overflow: visible;
+    position: absolute;
+    margin-right: -5px;
+    margin-top: 30px;
+    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.strip2-tick {
+    position: absolute;
+    float: right;
+    height: 0;
+    width: 0;
+    font-size: 0;
+    line-height: 0;
+    padding: 0;
+    margin: 0;
+    border-right: 5px solid transparent;
+    border-top: 5px solid rgb(102, 35, 35);
+    bottom: -6px;
+    right: 0;
+}
+///////////////////////
+body {
+    background: #a30808;/* match border color */
+    text-align: center;
+  }
+  .logo {
+    margin: 0;
+    position: relative;
+    position: center;
+    text-align: center;
+    font: 84px 'Arial Narrow', sans-serif;/* I picked this font because it's the closest looking 'web safe' font http://cssfontstack.com/ */
+    color: #b38a8a;
+    text-transform: uppercase;
+    letter-spacing: -4px;
+    
+  }
+  
+  /* stuff for both words */
+  .logo span {
+    position: relative;
+  }
+  .logo span:before,
+  .logo span:after {
+    content: '';
+    position: absolute;
+    border-width: 20px;
+    border-style: solid;
+    border-color: transparent;
+    height: 0;
+    z-index: 10;
+  }
+  
+  /* stuff for 1st word */
+  .logo .word1 {
+    color: #dc006c;
+    margin-right: -38px;
+    transform: rotateY(180deg);/* using Prefix free */
+    display: inline-block;/* required for transform */
+    z-index: 10;/* stack 1st word on top */
+  }
+  .logo .word1:before {
+    right: -4px;/* would be left, but we flipped the word */
+    top: -9px;
+    border-top-color: #F2F2F2;/* match background color */
+    border-right-color: #F2F2F2;/* would be left, but we flipped the word */
+  }
+  .logo .word1:after {
+    left: 17px;/* would be right, but we flipped the word */
+    bottom: -15px;
+    border-bottom-color: #F2F2F2;
+    border-left-color: #F2F2F2;/* would be right, but we flipped the word */
+  }
+  
+  /* stuff for 2nd word */
+  .logo .word2 {
+    z-index: 0;/* stack 2nd word below */
+  }
+  .logo .word2:before {
+    left: -4px;
+    top: -6px;
+    border-top-color: #F2F2F2;
+    border-left-color: #F2F2F2;
+  }
+  .logo .word2:after {
+    right: -4px;  
+    bottom: 4px;
+    border-bottom-color:#F2F2F2;
+    border-right-color: #F2F2F2;
+  }
